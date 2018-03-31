@@ -1,6 +1,10 @@
 package ntlm
 
-import "golang.org/x/crypto/md4"
+import (
+	"encoding/hex"
+
+	"golang.org/x/crypto/md4"
+)
 
 /*
 FromASCIIString calculates the NTLM hash of an ASCII string (in)
@@ -21,4 +25,13 @@ func FromASCIIString(in string) []byte {
 
 	/* Return the output */
 	return mdfour.Sum(nil)
+}
+
+/*
+FromASCIIStringToHex calculates the NTLM hash of an ASCII string (in)
+and returns it as a hexademical hash in a string, e.g. 00feabcd
+*/
+func FromASCIIStringToHex(in string) string {
+	b := FromASCIIString(in)
+	return hex.EncodeToString(b)
 }
